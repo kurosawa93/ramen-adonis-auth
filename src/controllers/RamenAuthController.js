@@ -33,7 +33,7 @@ class AuthController {
 
     async aesLogin({request, auth, response}) {
         const relations = request.input('relations')
-        const decrypted = AuthUtil.decodePayload(Config._config.ramen.aesKey, request.body.payload)
+        const decrypted = AuthUtil.decodePayload(Config._config.ramenauth.aesKey, request.body.payload)
         const account = await AuthUtil.basicAuthenticate(auth, this.model, decrypted.email, decrypted.password)
         if (relations) {
             const relationArr = relations.split(',')
@@ -70,7 +70,7 @@ class AuthController {
     }
 
     async aesRegister({request, auth, response}) {
-        const decrypted = AuthUtil.decodePayload(Config._config.ramen.aesKey, request.body.payload)
+        const decrypted = AuthUtil.decodePayload(Config._config.ramenauth.aesKey, request.body.payload)
         if (this.defaultRole && !decrypted['roles']) {
             decrypted['roles'] = this.defaultRole
         }

@@ -14,7 +14,7 @@ class RamenAuthVerify {
      * One API should only have one permission. This is debatable in the future.
      */
     async handle({ request, response }, next, properties) {
-        let appUrl = Config._config.ramen.appUrl
+        let appUrl = Config._config.ramenauth.appUrl
         appUrl = appUrl + '/api/auth/verify'
         let token = request.header('Authorization')
         if (!token) {

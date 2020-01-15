@@ -24,7 +24,7 @@ class RamenForgotPasswordController {
 
         try {
             const key = process.env.APP_KEY
-            const url = Config._config.ramen.appUrl
+            const url = Config._config.ramenauth.appUrl
             const token = await TokenUtil.generateToken(key, {sub: accountModel.id}, 86400)
             await TokenUtil.saveToken(accountModel, token)
             await AuthUtil.sendMailForgotPassword(this.mail, url, token, accountModel)
@@ -79,7 +79,7 @@ class RamenForgotPasswordController {
 
         const key = process.env.APP_KEY
         const newToken = await TokenUtil.generateToken(key, {sub: tokenResult.data.sub}, 180)
-        const url = Config._config.ramen.redirectUrl + '?token=' + newToken
+        const url = Config._config.ramenauth.redirectUrl + '?token=' + newToken
         return response.redirect(url)
     }
 
@@ -139,7 +139,7 @@ class RamenForgotPasswordController {
             })
         }
 
-        const decrypted = AuthUtil.decodePayload(Config._config.ramen.aesKey, request.body.payload)
+        const decrypted = AuthUtil.decodePayload(Config._config.ramenauth.aesKey, request.body.payload)
         accountModel.password = decrypted.password
         await accountModel.save()
         await TokenUtil.blacklistToken(accountModel)
