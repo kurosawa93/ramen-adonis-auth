@@ -114,6 +114,18 @@ class AuthController {
         })
     }
 
+    async aesUpdatePassword({request, response}) {
+        const createdBy = request.body.created_by
+        const decrypted = AuthUtil.decodePayload(Config._config.ramenauth.aesKey, request.body.payload)
+        const result = await AuthUtil.changePassword(this.model, createdBy.id, decrypted.old_password, decrypted.new_password)
+        return response.status(200).send({
+            data: result,
+            meta: {
+                message: 'change password is successfull'
+            }
+        })
+    }
+
     async verify({request, auth, response}) {
         const token = request.body.token
         const claim = request.body.claim
