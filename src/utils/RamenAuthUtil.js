@@ -35,9 +35,9 @@ class RamenAuthUtil {
     }
 
     static async changePassword(model, id, oldPassword, newPassword) {
-        const hashedOldPwd = await Hash.make(oldPassword)
-        const data = await model.query().where('id', id).where('password', hashedOldPwd)
-        if (!data) {
+        const data = await model.find(id)
+        const pwdMatched = await Hash.verify(oldPassword, data.password)
+        if (!pwdMatched) {
             throw new GenericResponseException('OLD PASSWORD DOES NOT MATCH', null, 400)
         }
 
