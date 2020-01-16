@@ -5,9 +5,8 @@ const TokenUtil = require('../utils/RamenTokenUtil')
 const Config = use('Adonis/Src/Config')
 
 class AuthController {
-    constructor(model, mail, defaultRole = null) {
+    constructor(model, defaultRole = null) {
         this.model = model
-        this.mail = mail
         this.defaultRole = defaultRole
     }
 

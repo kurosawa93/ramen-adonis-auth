@@ -13,11 +13,6 @@ class RamenAuthProvider extends ServiceProvider {
             const RamenForgotPasswordController = require('../src/controllers/RamenForgotPasswordController')
             return RamenForgotPasswordController
         })
-
-        this.app.singleton('Ramen/AuthVerify', (app) => {
-            const RamenAuthVerify = require('../src/middlewares/RamenAuthVerify')
-            return new RamenAuthVerify()
-        })
     }
 }
 
