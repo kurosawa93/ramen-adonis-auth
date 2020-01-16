@@ -14,6 +14,10 @@
   ],
   "author": "Rachmat Priambudi",
   "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kurosawa93/rame-adonis-auth"
+  },
   "devDependencies": {
     "@adonisjs/ace": "^5.0.8",
     "@adonisjs/fold": "^4.0.9"
