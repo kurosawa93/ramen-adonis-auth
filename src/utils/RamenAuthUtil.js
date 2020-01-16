@@ -1,6 +1,8 @@
 'use strict'
 
+const GenericResponseException = require('../exceptions/GenericResponseException')
 const crypto = require('crypto')
+const Hash = use('Hash')
 
 class RamenAuthUtil {
     static async basicAuthenticate(auth, model, email, password) {
@@ -30,6 +32,18 @@ class RamenAuthUtil {
                 .to(accountObj.email)
                 .subject('Forgot Password')
         })
+    }
+
+    static async changePassword(model, id, oldPassword, newPassword) {
+        const hashedOldPwd = await Hash.make(oldPassword)
+        const data = await model.query().where('id', id).where('password', hashedOldPwd)
+        if (!data) {
+            throw new GenericResponseException('OLD PASSWORD DOES NOT MATCH', null, 400)
+        }
+
+        data.password = newPassword
+        await data.save()
+        return data
     }
 
     static decodePayload(aesKey, payload) {

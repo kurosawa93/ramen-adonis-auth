@@ -101,6 +101,19 @@ class AuthController {
         })
     }
 
+    async updatePassword({request, response}) {
+        const createdBy = request.body.created_by
+        const oldPassword = request.body.old_password
+        const newPassword = request.body.new_password
+        const result = await AuthUtil.changePassword(this.model, createdBy.id, oldPassword, newPassword)
+        return response.status(200).send({
+            data: result,
+            meta: {
+                message: 'change password is successfull'
+            }
+        })
+    }
+
     async verify({request, auth, response}) {
         const token = request.body.token
         const claim = request.body.claim
