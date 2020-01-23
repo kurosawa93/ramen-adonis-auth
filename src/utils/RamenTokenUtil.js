@@ -23,7 +23,7 @@ class RamenTokenUtil {
     }
 
     static async resolveForgotToken(forgotToken) {
-        const tokenResult = TokenUtil.decodeToken(forgotToken)
+        const tokenResult = RamenTokenUtil.decodeToken(forgotToken)
         if (tokenResult.error.message) {
             return {error: {code: 403, message: 'token is broken'}}
         }
