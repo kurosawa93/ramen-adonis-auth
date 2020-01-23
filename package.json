@@ -1,6 +1,6 @@
 {
   "name": "ramen-adonis-auth",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "part of ramen package library. this package handle full authentication process, from login, register, forgot password, and verify claim",
   "main": "index.js",
   "scripts": {
