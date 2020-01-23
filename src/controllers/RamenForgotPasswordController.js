@@ -10,6 +10,7 @@ class RamenForgotPasswordController {
         this.mail = mail
         this.token = token
     }
+    
     async initForgetPassword({request, auth, response}) {
         const email = request.body.email
         const accountModel = await this.model.findBy('email', email)
@@ -129,7 +130,7 @@ class RamenForgotPasswordController {
             })
         }
 
-        const accountModel = await TokenUtil.resolveForgotToken(token)
+        let accountModel = await TokenUtil.resolveForgotToken(this.model, token)
         if (accountModel.error.code) {
             return response.status(accountModel.error.code).send({
                 data: null,
@@ -140,6 +141,7 @@ class RamenForgotPasswordController {
         }
 
         const decrypted = AuthUtil.decodePayload(Config._config.ramenauth.aesKey, request.body.payload)
+        accountModel = accountModel.data
         accountModel.password = decrypted.password
         await accountModel.save()
         await TokenUtil.blacklistToken(accountModel)
