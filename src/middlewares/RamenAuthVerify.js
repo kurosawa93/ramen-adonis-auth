@@ -35,7 +35,7 @@ class RamenAuthVerify {
 
         try {
             const { data } = await axios.post(appUrl, body)
-            request.body.created_by = data.data
+            request['created_by'] = data.data
         }
         catch(error) {
             return response.status(403).send({
