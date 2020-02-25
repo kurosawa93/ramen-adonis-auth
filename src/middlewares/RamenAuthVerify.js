@@ -21,7 +21,7 @@ class RamenAuthVerify {
             return response.status(403).send({
                 data: null,
                 meta: {
-                    message: 'You\'re not authorized.'
+                    message: 'Request incomplete. Token not provided'
                 }
             })
         }
@@ -39,10 +39,17 @@ class RamenAuthVerify {
             request.body.created_by = data.data  // to support older version, to prevent breaking in a lot of place
         }
         catch(error) {
-            return response.status(403).send({
+            let message = error.message
+            let code = 500
+            if (error.response) {
+                message = error.response.data.meta.message
+                code = 403
+            }
+
+            return response.status(code).send({
                 data: null,
                 meta: {
-                    message: 'You\'re not authorized'
+                    message: 'Failed contacting auth server. ' + message
                 }
             })
         }
